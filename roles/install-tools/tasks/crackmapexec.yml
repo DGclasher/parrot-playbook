@@ -1,0 +1,13 @@
+---
+- name: "installing pipx via pip"
+  ansible.builtin.pip:
+    name:
+      - pipx
+
+- name: "ensuring path"
+  shell: |
+    pipx ensurepath
+
+- name: "installing crackmapexec"
+  shell: |
+    
