@@ -15,7 +15,7 @@
 - name: "installing docker-compose"
   ansible.builtin.get_url:
     url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64"
-    dest: "/usr/local/bin/"
+    dest: "/usr/local/bin/docker-compose"
     mode: '0755'
   become: true
   become_method: sudo

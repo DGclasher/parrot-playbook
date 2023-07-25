@@ -1,0 +1,51 @@
+---
+- name: "cloning kiterunner repo"
+  git:
+    repo: "https://github.com/assetnote/kiterunner"
+    dest: "/tmp/kiterunner"
+
+- name: "building kiteunner"
+  shell: |
+    cd /tmp/kiterunner
+    make build
+
+- name: "copying kr to bin"
+  copy:
+    src: "/tmp/kiterunner/dist/kr"
+    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    mode: '0750'
+
+---
+- name: "cloning the kerbrute repo"
+  git:
+    repo: "https://github.com/ropnop/kerbrute"
+    dest: "/tmp/kerbrute"
+
+- name: "building kerbrute"
+  shell: |
+    cd /tmp/kerbrute
+    go build
+
+- name: "moving kerbrute to bin"
+  copy:
+    src: "/tmp/kerbrute/kerbrute"
+    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    mode: '0750'
+
+---
+- name: "cloning ffuf repo"
+  git:
+    repo: "https://github.com/ffuf/ffuf"
+    dest: "/tmp/ffuf"
+
+- name: "building ffuf"
+  shell: |
+    cd /tmp/ffuf
+    go get
+    go build
+
+- name: "copying ffuf to bin"
+  copy:
+    src: "/tmp/ffuf/ffuf"
+    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    mode: '0750'

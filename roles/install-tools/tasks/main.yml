@@ -1,5 +1,4 @@
 ---
 - include: softwares.yml
 - include: python-tools.yml
-- include: kerbrute.yml
-- include: kite-runner.yml
+- include: build-install.yml
