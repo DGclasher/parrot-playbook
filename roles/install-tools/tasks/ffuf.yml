@@ -1,0 +1,17 @@
+---
+- name: "cloning ffuf repo"
+  git:
+    repo: "https://github.com/ffuf/ffuf"
+    dest: "/tmp/ffuf"
+
+- name: "building ffuf"
+  shell: |
+    cd /tmp/ffuf
+    go get
+    go build
+
+- name: "copying ffuf to bin"
+  copy:
+    src: "/tmp/ffuf/ffuf"
+    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    mode: '0750'
