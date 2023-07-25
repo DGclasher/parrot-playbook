@@ -3,6 +3,7 @@
   hosts: virtualmachines
   connection: local
   roles:
+    - role: "roles/initialize"
     - role: "roles/configure-tmux"
     - role: "roles/customize-terminal"
     - role: "roles/install-tools"
