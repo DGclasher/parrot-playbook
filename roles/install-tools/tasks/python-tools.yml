@@ -1,0 +1,19 @@
+---
+- name: "installing pipx"
+  ansible.builtin.pip:
+    name:
+      - pipx
+
+- name: "ensuring pipx path"
+  shell: pipx ensurepath
+
+- name: "installing tools via pipx"
+  community.general.pipx:
+    name:
+      - impacket
+      - crackmapexec
+      - certipy-ad
+      - arjun
+      - git-dumper
+  async: 300
+  poll: 0

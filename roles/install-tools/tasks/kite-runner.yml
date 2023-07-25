@@ -1,0 +1,16 @@
+---
+- name: "cloning kite-runner repo"
+  git:
+    repo: "https://github.com/assetnote/kiterunner"
+    dest: "/tmp/kiterunner"
+
+- name: "building kiterunner"
+  shell: |
+    cd /tmp/kiterunner
+    make build
+
+- name: "copying kr to bin"
+  copy:
+    src: "/tmp/kiterunner/dist/kr"
+    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    mode: '0750'

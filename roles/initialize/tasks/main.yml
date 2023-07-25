@@ -1,0 +1,7 @@
+---
+- name: "updating apt repositories"
+  apt:
+    update_cache: yes
+  become: true
+  become_method: sudo
+  

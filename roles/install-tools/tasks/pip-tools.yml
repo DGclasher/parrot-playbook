@@ -1,7 +1,0 @@
----
-- name: "installing tools via pip"
-  ansible.builtin.pip:
-    name:
-      - git-dumper
-      - arjun
-      - certipy-ad
