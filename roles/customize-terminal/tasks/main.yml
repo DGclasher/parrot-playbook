@@ -28,5 +28,5 @@
 
 - name: "setting new profile -> dragon"
   shell:
-    cmd: "dconf /org/mate/terminal/profiles/dragon/ < {{ role_path }}/files/dconf-dump-dragon"
+    cmd: "dconf load /org/mate/terminal/profiles/dragon/ < {{ role_path }}/files/dconf-dump-dragon"
   when: "'dragon' not in profile_list.value"
