@@ -4,29 +4,6 @@
     src: "{{ role_path }}/files/.bashrc"
     dest: "{{ ansible_env.HOME }}"
 
-- name: "read profiles"
-  dconf:
-    state: "read"
-    key: "/org/mate/terminal/global/profile-list"
-  register: "profile_list"
-
-- name: "profile_list.value is not set, setting"
-  set_fact:
-    profile_list:
-      value: '["default"]'
-  when: profile_list.value is none
-
-- name: "append to profile_list"
-  set_fact:
-    new_profile_list: "{{ profile_list.value | regex_replace(']$', \", 'dragon']\") if profile_list.value else ['dragon'] }}"
-
-- name: "write updated profile"
-  dconf:
-    key: "/org/mate/terminal/global/profile-list"
-    value: "{{ new_profile_list }}"
-  when: "'dragon' not in profile_list.value"
-
-- name: "setting new profile -> dragon"
+- name: "changing default profile -> Dragon"
   shell:
-    cmd: "dconf load /org/mate/terminal/profiles/dragon/ < {{ role_path }}/files/dconf-dump-dragon"
-  when: "'dragon' not in profile_list.value"
+    cmd: "dconf load /org/mate/terminal/profiles/default/ < {{ role_path }}/files/dconf-dump-dragon"
