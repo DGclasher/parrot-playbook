@@ -84,10 +84,13 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|tmux*)
-    VPN=$(ps -ef | grep 'openvpn [eu|au|us|sg]'|tail -1| rev| awk '{print $1}'|rev |sed 's/\..*$//g')
-    IP=$(ip -4 -o addr show ens33|awk '{print $4}'|sed 's/\/.*$//g')
-    if [ ! -z "$VPN" ]; then
+    VPN=$(ps -ef | grep 'openvpn'|wc -l)
+    if [ $VPN -lt 2 ]; then
+    	IP=$(ip -4 -o addr show enp0s3|awk '{print $4}'|sed 's/\/.*$//g')
+        VPN=""
+    else
       IP=$(ip -4 -o addr show tun0|awk '{print $4}'|sed 's/\/.*$//g')
+      VPN="openvpn"
     fi
     PS1="\[\033[1;32m\]\342\224\214\342\224\200\$([[ \${IP} == *\"10.\"* ]] && echo \"[\[\033[1;34m\]\${VPN}\[\033[1;32m\]]\342\224\200\033[1;37m\]\[\033[1;32m\]\")[\[\033[1;37m\]\${IP}\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\u\[\033[01;32m\]@\[\033[01;34m\]\h\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\w\[\033[1;32m\]]\n\[\033[1;32m\]\342\224\224\342\224\200\342\224\200\342\225\274 [\[\e[01;33m\]★\[\e[01;32m\]]\\$ \[\e[0m\]"
     ;;
@@ -135,6 +138,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-if [ -f ~/.bash_profile ]; then
-    . ~/.bash_profile
-fi
+

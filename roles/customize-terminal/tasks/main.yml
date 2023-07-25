@@ -1,7 +1,34 @@
 ---
-- name: "copy bashrc file"
+- name: "getting bashrc path"
+  stat:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+  register: bashrc
+
+- name: "backing up bashrc"
+  copy:
+    src: "{{ ansible_env.HOME }}/.bashrc"
+    dest: "{{ ansible_env.HOME }}/.bashrc.bak"
+  when: bashrc.stat.exists
+
+- name: "copying bashrc file"
   copy:
     src: "{{ role_path }}/files/.bashrc"
+    dest: "{{ ansible_env.HOME }}"
+
+- name: "getting bash_profile path"
+  stat:
+    path: "{{ ansible_env.HOME }}/.bash_profile"
+  register: bash_profile
+
+- name: "backing up bash_profile"
+  copy:
+    src: "{{ ansible_env.HOME }}/.bash_profile"
+    dest: "{{ ansible_env.HOME }}/.bash_profile.bak"
+  when: bashrc.stat.exists
+
+- name: "copying bash_profile"
+  copy:
+    src: "{{ role_path }}/files/.bash_profile"
     dest: "{{ ansible_env.HOME }}"
 
 - name: "changing default profile -> Dragon"
