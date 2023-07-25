@@ -53,8 +53,8 @@
 - name: "extracting chisel"
   shell: |
     cd /opt/tools/forwarding/
-    gunzip chisel_linux.gz
-    gunzip chisel_windows.gz
+    gunzip --force chisel_linux.gz
+    gunzip --force chisel_windows.gz
   become: true
   become_method: sudo
 
