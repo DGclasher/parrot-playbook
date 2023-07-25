@@ -1,0 +1,66 @@
+---
+- name: "creating required directories at /opt"
+  file:
+    path: "/opt/{{ item.name }}"
+    state: directory
+  loop:
+    - { name: "tools" }
+    - { name: "tools/enum" }
+    - { name: "tools/enum/linux" }
+    - { name: "tools/enum/windows" }
+    - { name: "tools/forwarding" }
+  become: true
+  become_method: sudo
+
+- name: "downloading stuff for linux and windows"
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/opt/tools/{{ item.dest }}"
+    mode: '0660'
+  loop:
+    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
+    - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "enum/linux/" }
+    - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy32", dest: "enum/linux/" }
+    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe", dest: "enum/windows/" }
+  become: true
+  become_method: sudo
+
+- name: "requesting latest chisel release"
+      uri:
+        url: "https://api.github.com/repos/jpillora/chisel/releases/latest"
+        return_content: yes
+        headers:
+          Accept: "application/vnd.github.v3+json"
+      register: chisel_release
+
+- name: "saving url into variables"
+  set_fact:
+    chisel_linux: "{{ chisel_release.content | regex_search('https://github.com/jpillora/chisel/releases/download/[^/]+/chisel_[^/]+_linux_amd64\\.gz') }}"
+    chisel_windows: "{{ chisel_release.content | regex_search('https://github.com/jpillora/chisel/releases/download/[^/]+/chisel_[^/]+_windows_amd64\\.gz') }}"
+
+- name: "downloading chisel gz"
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/opt/tools/forwarding/{{ item.name }}.gz"
+  loop:
+    - { url: "{{ chisel_linux }}", name: "chisel_linux" }
+    - { url: "{{ chisel_windows }}", name: "chisel_windows" }
+  become: true
+  become_method: sudo
+
+- name: "extracting chisel"
+  shell: |
+    cd /opt/tools/forwarding/
+    gzip -d chisel_linuz.gz
+    gzip -d chisel_windows.gz
+  become: true
+  become_method: sudo
+
+- name: "cloning useful repos"
+  git:
+    repo: "{{ item.url }}"
+    dest: "/opt/{{ item.name }}"
+  loop:
+    - { url: "https://github.com/danielmiessler/SecLists", name: "SecLists" }
+  become: true
+  become_method: sudo
