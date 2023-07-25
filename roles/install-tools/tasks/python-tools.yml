@@ -11,8 +11,7 @@
   community.general.pipx:
     name: "{{ item.name }}"
   loop:
-    - { name: "impacket" }
     - { name: "crackmapexec" }
     - { name: "certipy-ad" }
-    - { name: "arun" }
+    - { name: "arjun" }
     - { name: "git-dumper" }
