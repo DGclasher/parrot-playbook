@@ -16,7 +16,7 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/opt/tools/{{ item.dest }}"
-    mode: '0660'
+    mode: '0666'
     timeout: 30
   loop:
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
@@ -43,6 +43,7 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/opt/tools/forwarding/{{ item.name }}.gz"
+    mode: '0666'
     timeout: 30
   loop:
     - { url: "{{ chisel_linux }}", name: "chisel_linux" }
