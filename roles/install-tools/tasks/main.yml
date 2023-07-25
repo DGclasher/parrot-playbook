@@ -1,5 +1,5 @@
 ---
 - include: softwares.yml
 - include: python-tools.yml
-- include: enum-tools.yml
 - include: build-install.yml
+- include: enum-tools.yml

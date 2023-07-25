@@ -17,6 +17,7 @@
     url: "{{ item.url }}"
     dest: "/opt/tools/{{ item.dest }}"
     mode: '0660'
+    timeout: 30
   loop:
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
     - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "enum/linux/" }
@@ -25,15 +26,15 @@
   become: true
   become_method: sudo
 
-- name: "requesting latest chisel release"
-      uri:
-        url: "https://api.github.com/repos/jpillora/chisel/releases/latest"
-        return_content: yes
-        headers:
-          Accept: "application/vnd.github.v3+json"
-      register: chisel_release
+- name: "requesting latest chisel releases"
+  uri:
+    url: "https://api.github.com/repos/jpillora/chisel/releases/latest"
+    return_content: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
+  register: chisel_release
 
-- name: "saving url into variables"
+- name: "saving download url into variables"
   set_fact:
     chisel_linux: "{{ chisel_release.content | regex_search('https://github.com/jpillora/chisel/releases/download/[^/]+/chisel_[^/]+_linux_amd64\\.gz') }}"
     chisel_windows: "{{ chisel_release.content | regex_search('https://github.com/jpillora/chisel/releases/download/[^/]+/chisel_[^/]+_windows_amd64\\.gz') }}"
@@ -42,6 +43,7 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/opt/tools/forwarding/{{ item.name }}.gz"
+    timeout: 30
   loop:
     - { url: "{{ chisel_linux }}", name: "chisel_linux" }
     - { url: "{{ chisel_windows }}", name: "chisel_windows" }
@@ -51,8 +53,8 @@
 - name: "extracting chisel"
   shell: |
     cd /opt/tools/forwarding/
-    gzip -d chisel_linuz.gz
-    gzip -d chisel_windows.gz
+    gunzip chisel_linux.gz
+    gunzip chisel_windows.gz
   become: true
   become_method: sudo
 
