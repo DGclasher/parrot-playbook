@@ -19,3 +19,5 @@
     mode: '0755'
   become: true
   become_method: sudo
+  async: 120
+  poll: 0

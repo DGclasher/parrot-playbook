@@ -9,11 +9,10 @@
 
 - name: "installing tools via pipx"
   community.general.pipx:
-    name:
-      - impacket
-      - crackmapexec
-      - certipy-ad
-      - arjun
-      - git-dumper
-  async: 300
-  poll: 0
+    name: "{{ item.name }}"
+  loop:
+    - { name: "impacket" }
+    - { name: "crackmapexec" }
+    - { name: "certipy-ad" }
+    - { name: "arun" }
+    - { name: "git-dumper" }
