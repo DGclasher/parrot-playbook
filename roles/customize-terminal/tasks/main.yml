@@ -1,35 +1,29 @@
 ---
-- name: "getting bashrc path"
+- name: "getting bashrc and bash_profile path"
   stat:
-    path: "{{ ansible_env.HOME }}/.bashrc"
-  register: bashrc
+    path: "{{ item }}"
+  loop:
+    - "{{ ansible_env.HOME }}/.bashrc"
+    - "{{ ansible_env.HOME }}/.bash_profile"
+  register: file_stat
 
-- name: "backing up bashrc"
+- name: "backing up bashrc and bash_profile"
   copy:
-    src: "{{ ansible_env.HOME }}/.bashrc"
-    dest: "{{ ansible_env.HOME }}/.bashrc.bak"
-  when: bashrc.stat.exists
+    src: "{{ ansible_env.HOME }}/{{ item.name }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.name }}.bak"
+  loop:
+    - { status: "{{ file_stat.results[0] }}", name: ".bashrc" }
+    - { status: "{{ file_stat.results[1] }}", name: ".bash_profile" }
+  when: item.status.stat.exists
+  no_log: true
 
-- name: "copying bashrc file"
+- name: "copying bashrc and bash_profile to HOME"
   copy:
-    src: "{{ role_path }}/files/.bashrc"
+    src: "{{ role_path }}/files/{{ item }}"
     dest: "{{ ansible_env.HOME }}"
-
-- name: "getting bash_profile path"
-  stat:
-    path: "{{ ansible_env.HOME }}/.bash_profile"
-  register: bash_profile
-
-- name: "backing up bash_profile"
-  copy:
-    src: "{{ ansible_env.HOME }}/.bash_profile"
-    dest: "{{ ansible_env.HOME }}/.bash_profile.bak"
-  when: bashrc.stat.exists
-
-- name: "copying bash_profile"
-  copy:
-    src: "{{ role_path }}/files/.bash_profile"
-    dest: "{{ ansible_env.HOME }}"
+  loop:
+    - ".bashrc"
+    - ".bash_profile"
 
 - name: "changing default profile -> Dragon"
   shell:
