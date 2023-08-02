@@ -16,7 +16,7 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/opt/tools/{{ item.dest }}"
-    mode: '0666'
+    mode: '664'
     timeout: 30
   loop:
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
@@ -43,7 +43,7 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/opt/tools/forwarding/{{ item.name }}.gz"
-    mode: '0666'
+    mode: '664'
     timeout: 30
   loop:
     - { url: "{{ chisel_linux }}", name: "chisel_linux" }
@@ -63,7 +63,10 @@
   git:
     repo: "{{ item.url }}"
     dest: "/opt/{{ item.name }}"
+    version: "{{ item.branch }}"
   loop:
-    - { url: "https://github.com/danielmiessler/SecLists", name: "SecLists" }
+    - { url: "https://github.com/samratashok/nishang", name: "nishang", branch: "master" }
+    - { url: "https://github.com/danielmiessler/SecLists", name: "SecLists", branch: "master" }
+    - { url: "https://github.com/PowerShellMafia/PowerSploit", name: "PowerSploit", branch: "dev" }
   become: true
   become_method: sudo

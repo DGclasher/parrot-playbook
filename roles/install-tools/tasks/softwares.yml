@@ -1,23 +1,35 @@
 ---
-- name: "installing softwares from apt"
+- name: "installing softwares from repo"
   package:
     name:
-      # - golang
-      # - docker.io
       - jq
       - ntpdate
-      - flameshot
       - exiftool
+      # - docker.io
+      - flameshot
+      - apt-transport-https
     state: present
   become: true
   become_method: sudo
 
-- name: "installing docker-compose"
+- name: "downloading docker-compose"
   ansible.builtin.get_url:
     url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64"
     dest: "/usr/local/bin/docker-compose"
-    mode: '0711'
+    mode: '755'
+    timeout: 30
   become: true
   become_method: sudo
-  async: 120
+  async: 40
+  poll: 0
+
+- name: "downloading kubectl"
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ lookup('url','https://dl.k8s.io/release/stable.txt') }}/bin/linux/amd64/kubectl"
+    dest: "/usr/local/bin/kubectl"
+    mode: '755'
+    timeout: 30
+  become: true
+  become_method: sudo
+  async: 40
   poll: 0

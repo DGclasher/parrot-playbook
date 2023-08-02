@@ -49,3 +49,10 @@
     src: "/tmp/ffuf/ffuf"
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
+
+- name: "downloading kubeletctl"
+  ansible.builtin.get_url:
+    url: "https://github.com/cyberark/kubeletctl/releases/latest/download/kubeletctl_linux_amd64"
+    dest: "{{ ansible_env.HOME }}/.local/bin/kubeletctl"
+    mode: '750'
+    timeout: 30

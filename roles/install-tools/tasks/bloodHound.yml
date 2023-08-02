@@ -1,0 +1,66 @@
+---
+- name: "adding neo4j GPG key"
+  apt_key:
+    url: https://debian.neo4j.com/neotechnology.gpg.key
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "adding neo4j repository to sources list"
+  apt_repository:
+    repo: deb https://debian.neo4j.com stable latest
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "update apt cache"
+  apt:
+    update_cache: yes
+  become: true
+  become_method: sudo
+
+- name: "install neo4j"
+  apt:
+    name: neo4j
+    state: latest
+  become: true
+  become_method: sudo
+
+- name: "downloading BloodHound prebuild package"
+  ansible.builtin.get_url:
+    url: "https://github.com/BloodHoundAD/BloodHound/releases/latest/download/BloodHound-linux-x64.zip"
+    dest: "/tmp/bloodHound.zip"
+    timeout: 30
+
+- name: "unzipping BloodHound package"
+  ansible.builtin.unarchive:
+    src: "/tmp/bloodHound.zip"
+    dest: "/opt/"
+  become: true
+  become_method: sudo
+
+- name: "renaming to bloodHound"
+  shell: |
+    mv /opt/BloodHound-linux-x64 /opt/bloodHound
+    mkdir /opt/bloodHound/Collectors
+  become: true
+  become_method: sudo
+
+- name: "creating SymLink of BloodHound"
+  ansible.builtin.file:
+    src: "/opt/bloodHound/BloodHound"
+    dest: "{{ ansible_env.HOME }}/.local/bin/bloodHound"
+    state: link
+    force: true
+
+- name: "downloading SharpHound"
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/opt/bloodHound/Collectors/"
+    mode: "664"
+    timeout: 30
+  loop:
+    - { url: "https://github.com/BloodHoundAD/BloodHound/raw/master/Collectors/SharpHound.exe" }
+    - { url: "https://github.com/BloodHoundAD/BloodHound/raw/master/Collectors/SharpHound.ps1" }
+  become: true
+  become_method: sudo
