@@ -1,0 +1,40 @@
+---
+- name: Check if certificate exists
+  stat:
+    path: /usr/local/share/ca-certificates/BurpSuiteCA.der
+  register: cert
+
+- name: Downloading CA Certificate
+  ansible.builtin.command:
+    cmd: /usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar -Xmx4g -Djava.awt.headless=true /usr/share/burpsuite/burpsuite.jar < <(echo y) & sleep 10; curl http://localhost:8080/cert -s -o /tmp/BurpSuiteCA.der && kill $(lsof -t -i:8080)
+  when: cert.stat.exists == false
+
+- name: Copying the certificate to path
+  copy:
+    src: /tmp/BurpSuiteCA.der
+    dest: /usr/local/share/ca-certificates/BurpSuiteCA.der
+  become: true
+  become_method: sudo
+  when: cert.stat.exists == false
+
+- name: Create directory for Burp Suite extras
+  ansible.builtin.file:
+    path: "{{ burpsuite_extras_dir }}"
+    state: directory
+    mode: '755'
+  become: true
+  become_method: sudo
+
+- name: Download jar files
+  ansible.builtin.get_url:
+    url: "{{ item.value.url }}"
+    dest: "{{ burpsuite_extras_dir }}/{{ item.value.jar }}"
+    mode: '644'
+  loop: "{{ lookup('dict', burpsuite_extras_jars) }}"
+  become: true
+  become_method: sudo
+
+- name: Copy BurpSuite Community Config
+  template:
+    src: "{{ role_path }}/templates/UserConfigCommunity.json.j2"
+    dest: "{{ ansible_env.HOME }}/.BurpSuite/UserConfigCommunity.json"

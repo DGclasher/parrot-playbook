@@ -26,10 +26,23 @@
   become: true
   become_method: sudo
 
+- name: Deleting previous bloodHound
+  file:
+    path: /opt/bloodHound
+    state: absent
+  become: true
+  become_method: sudo
+
 - name: Renaming to bloodHound
   shell: |
     mv /opt/BloodHound-linux-x64 /opt/bloodHound
-    mkdir /opt/bloodHound/Collectors
+  become: true
+  become_method: sudo
+
+- name: Creating Collectors directory
+  file:
+    path: /opt/bloodHound/Collectors
+    state: directory
   become: true
   become_method: sudo
 
@@ -51,3 +64,5 @@
     - { url: "https://github.com/BloodHoundAD/BloodHound/raw/master/Collectors/SharpHound.ps1" }
   become: true
   become_method: sudo
+  async: 70
+  poll: 0

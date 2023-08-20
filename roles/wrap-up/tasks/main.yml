@@ -10,7 +10,6 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
-    - { name: "sublime-text", state: "present" }
     - { name: "neo4j", state: "latest" }
   become: true
   become_method: sudo

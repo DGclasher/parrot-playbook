@@ -56,3 +56,5 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/kubeletctl"
     mode: '750'
     timeout: 30
+  async: 40
+  poll: 0

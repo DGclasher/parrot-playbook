@@ -5,8 +5,9 @@
       - jq
       - ntpdate
       - exiftool
-      # - docker.io
+      - docker.io
       - flameshot
+      - burpsuite
       - apt-transport-https
     state: present
   become: true

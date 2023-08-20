@@ -4,4 +4,9 @@
     update_cache: yes
   become: true
   become_method: sudo
-  
+
+- name: Safe System Upgrade
+  apt:
+    upgrade: safe
+  become: true
+  become_method: sudo
