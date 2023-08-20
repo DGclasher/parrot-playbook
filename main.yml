@@ -6,3 +6,15 @@
     - role: "roles/initialize"
     - role: "roles/customize-terminal"
     - role: "roles/install-tools"
+    - role: "roles/configure-applications"
+    - role: gantsign.visual-studio-code
+      users:
+        - username: "{{ ansible_user_id }}" 
+          visual_studio_code_extensions:
+            - ms-python.python
+            - DEVSENSE.phptools-vscode
+            - icsharpcode.ilspy-vscode
+            - ms-dotnettools.vscode-dotnet-runtime
+            - streetsidesoftware.code-spell-checker
+            - snyk-security.snyk-vulnerability-scanner
+    - role: "roles/wrap-up"

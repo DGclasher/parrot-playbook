@@ -1,5 +1,5 @@
 ---
-- name: "creating required directories at /opt"
+- name: Creating required directories at /opt
   file:
     path: "/opt/{{ item.name }}"
     state: directory
@@ -12,21 +12,20 @@
   become: true
   become_method: sudo
 
-- name: "downloading stuff for linux and windows"
+- name: Downloading stuff for linux and windows
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/opt/tools/{{ item.dest }}"
     mode: '664'
     timeout: 30
   loop:
-    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
     - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "enum/linux/" }
-    - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy32", dest: "enum/linux/" }
+    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe", dest: "enum/windows/" }
   become: true
   become_method: sudo
 
-- name: "requesting latest chisel releases"
+- name: Requesting latest chisel releases
   uri:
     url: "https://api.github.com/repos/jpillora/chisel/releases/latest"
     return_content: yes
@@ -34,7 +33,7 @@
       Accept: "application/vnd.github.v3+json"
   register: chisel_release
 
-- name: "saving download url into variables"
+- name: Saving download url into variables
   set_fact:
     chisel_linux: "{{ chisel_release.content | regex_search('https://github.com/jpillora/chisel/releases/download/[^/]+/chisel_[^/]+_linux_amd64\\.gz') }}"
     chisel_windows: "{{ chisel_release.content | regex_search('https://github.com/jpillora/chisel/releases/download/[^/]+/chisel_[^/]+_windows_amd64\\.gz') }}"
@@ -51,7 +50,7 @@
   become: true
   become_method: sudo
 
-- name: "extracting chisel"
+- name: Extracting chisel
   shell: |
     cd /opt/tools/forwarding/
     gunzip --force chisel_linux.gz
@@ -59,7 +58,7 @@
   become: true
   become_method: sudo
 
-- name: "cloning useful repos"
+- name: Cloning useful repos
   git:
     repo: "{{ item.url }}"
     dest: "/opt/{{ item.name }}"

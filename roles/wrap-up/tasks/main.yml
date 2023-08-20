@@ -1,0 +1,16 @@
+---
+- name: Update package list
+  apt:
+    update_cache: yes
+  become: true
+  become_method: sudo
+
+- name: Install updated packages
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop:
+    - { name: "sublime-text", state: "present" }
+    - { name: "neo4j", state: "latest" }
+  become: true
+  become_method: sudo

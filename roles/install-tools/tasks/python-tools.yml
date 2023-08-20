@@ -1,13 +1,13 @@
 ---
-- name: "installing pipx"
+- name: Installing pipx
   ansible.builtin.pip:
     name:
       - pipx
 
-- name: "ensuring pipx path"
+- name: Ensuring pipx path
   shell: pipx ensurepath
 
-- name: "installing tools via pipx"
+- name: Installing tools via pipx
   community.general.pipx:
     name: "{{ item.name }}"
   loop:

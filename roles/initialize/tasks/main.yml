@@ -1,5 +1,5 @@
 ---
-- name: "updating apt repositories"
+- name: Updating repository
   apt:
     update_cache: yes
   become: true

@@ -1,5 +1,5 @@
 ---
-- name: "getting bashrc and bash_profile path"
+- name: Getting bashrc and bash_profile path
   stat:
     path: "{{ item }}"
   loop:
@@ -7,7 +7,7 @@
     - "{{ ansible_env.HOME }}/.bash_profile"
   register: file_stat
 
-- name: "backing up bashrc and bash_profile"
+- name: Backing up bashrc and bash_profile
   copy:
     src: "{{ ansible_env.HOME }}/{{ item.name }}"
     dest: "{{ ansible_env.HOME }}/{{ item.name }}.bak"
@@ -17,7 +17,7 @@
   when: item.status.stat.exists
   no_log: true
 
-- name: "copying bashrc and bash_profile to HOME"
+- name: Copying bashrc and bash_profile to HOME
   copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: "{{ ansible_env.HOME }}"
@@ -25,6 +25,9 @@
     - ".bashrc"
     - ".bash_profile"
 
-- name: "changing default profile -> Dragon"
+- name: Changing default profile -> Dragon
   shell:
     cmd: "dconf load /org/mate/terminal/profiles/default/ < {{ role_path }}/files/dconf-dump-dragon"
+  when:
+    - ansible_distribution == 'Parrot'
+    - ansible_env.XDG_CURRENT_DESKTOP == 'MATE'

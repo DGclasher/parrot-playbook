@@ -1,5 +1,5 @@
 ---
-- name: "cloning kiterunner repo"
+- name: Cloning kiterunner repo
   git:
     repo: "https://github.com/assetnote/kiterunner"
     dest: "/tmp/kiterunner"
@@ -9,48 +9,48 @@
     cd /tmp/kiterunner
     make build
 
-- name: "copying kr to bin"
+- name: Moving kr to bin
   copy:
     src: "/tmp/kiterunner/dist/kr"
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
 
 
-- name: "cloning the kerbrute repo"
+- name: Cloning the kerbrute repo
   git:
     repo: "https://github.com/ropnop/kerbrute"
     dest: "/tmp/kerbrute"
 
-- name: "building kerbrute"
+- name: Building kerbrute
   shell: |
     cd /tmp/kerbrute
     go build
 
-- name: "moving kerbrute to bin"
+- name: Moving kerbrute to bin
   copy:
     src: "/tmp/kerbrute/kerbrute"
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
 
 
-- name: "cloning ffuf repo"
+- name: Cloning ffuf repo
   git:
     repo: "https://github.com/ffuf/ffuf"
     dest: "/tmp/ffuf"
 
-- name: "building ffuf"
+- name: Building ffuf
   shell: |
     cd /tmp/ffuf
     go get
     go build
 
-- name: "copying ffuf to bin"
+- name: Moving ffuf to bin
   copy:
     src: "/tmp/ffuf/ffuf"
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
 
-- name: "downloading kubeletctl"
+- name: Downloading kubeletctl
   ansible.builtin.get_url:
     url: "https://github.com/cyberark/kubeletctl/releases/latest/download/kubeletctl_linux_amd64"
     dest: "{{ ansible_env.HOME }}/.local/bin/kubeletctl"
