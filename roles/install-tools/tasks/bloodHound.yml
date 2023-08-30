@@ -13,6 +13,21 @@
   become: true
   become_method: sudo
 
+- name: Updating apt repository
+  apt:
+    update_cache: yes
+  become: true
+  become_method: sudo
+
+- name: Installing Neo4j
+  apt:
+    name: neo4j
+    state: latest
+  become: true
+  become_method: sudo
+  async: 120
+  poll: 0
+
 - name: Downloading BloodHound prebuild package
   ansible.builtin.get_url:
     url: "https://github.com/BloodHoundAD/BloodHound/releases/latest/download/BloodHound-linux-x64.zip"
