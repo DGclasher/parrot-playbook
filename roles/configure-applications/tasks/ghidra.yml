@@ -1,0 +1,6 @@
+---
+- name: Copying ghidra_auto script to path
+  copy:
+    src: "{{ role_path }}/files/ghidra_auto"
+    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    mode: '0744'

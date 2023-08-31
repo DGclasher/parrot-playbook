@@ -3,6 +3,7 @@
   package:
     name:
       - jq
+      - ghidra
       - ntpdate
       - exiftool
       - docker.io
@@ -17,7 +18,7 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/usr/local/bin/{{ item.name }}"
-    mode: '755'
+    mode: '0711'
     timeout: 30
   loop:
     - { url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64", name: "docker-compose" }

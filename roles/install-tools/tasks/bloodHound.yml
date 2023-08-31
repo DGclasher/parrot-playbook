@@ -1,12 +1,12 @@
 ---
-- name: Adding neo4j GPG key
+- name: Adding Neo4j GPG key
   apt_key:
     url: https://debian.neo4j.com/neotechnology.gpg.key
     state: present
   become: true
   become_method: sudo
 
-- name: Adding neo4j repository to sources list
+- name: Adding Neo4j repository to sources list
   apt_repository:
     repo: deb https://debian.neo4j.com stable latest
     state: present
@@ -19,10 +19,14 @@
   become: true
   become_method: sudo
 
+- name: Get latest version of Neo4j
+  shell: "apt list -a neo4j | awk '{print $2}' | grep . | head -n 1 | awk -F: '{print $2}'"
+  register: neo4j_version
+
 - name: Installing Neo4j
   apt:
-    name: neo4j
-    state: latest
+    name: "neo4j={{ neo4j_version.stdout }}"
+    state: present
   become: true
   become_method: sudo
   async: 120
