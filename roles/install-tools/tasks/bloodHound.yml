@@ -20,7 +20,7 @@
   become_method: sudo
 
 - name: Get latest version of Neo4j
-  shell: "apt list -a neo4j | awk '{print $2}' | grep . | head -n 1 | awk -F: '{print $2}'"
+  shell: "apt list -a neo4j | awk '{print $2}' | grep . | head -n 1"
   register: neo4j_version
 
 - name: Installing Neo4j
