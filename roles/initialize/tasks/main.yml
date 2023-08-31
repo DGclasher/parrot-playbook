@@ -1,6 +1,0 @@
----
-- name: Updating apt repository
-  apt:
-    update_cache: yes
-  become: true
-  become_method: sudo
