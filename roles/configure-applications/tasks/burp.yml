@@ -4,14 +4,20 @@
     path: /usr/local/share/ca-certificates/BurpSuiteCA.der
   register: cert
 
-- name: Downloading CA Certificate
-  ansible.builtin.command:
-    cmd: /usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar -Xmx4g -Djava.awt.headless=true /usr/share/burpsuite/burpsuite.jar < <(echo y) & sleep 10; curl http://localhost:8080/cert -s -o /tmp/BurpSuiteCA.der && kill $(lsof -t -i:8080)
+- name: Copying getburpcert script
+  copy:
+    src: "{{ role_path }}/files/getburpcert.sh"
+    dest: /tmp/getburpcert.sh
+    mode: 744
   when: cert.stat.exists == false
 
-- name: Copying the certificate to path
+- name: Executing script to download Burp CA cert
+  shell: /tmp/getburpcert.sh
+  when: cert.stat.exists == false
+
+- name: Copying certificate to path
   copy:
-    src: /tmp/BurpSuiteCA.der
+    src: /tmp/cacert.der
     dest: /usr/local/share/ca-certificates/BurpSuiteCA.der
   become: true
   become_method: sudo
