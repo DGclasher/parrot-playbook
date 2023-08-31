@@ -24,6 +24,8 @@
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe", dest: "enum/windows/" }
   become: true
   become_method: sudo
+  async: 90
+  poll: 0
 
 - name: Requesting latest chisel releases
   uri:
