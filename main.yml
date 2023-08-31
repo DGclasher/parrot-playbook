@@ -1,9 +1,14 @@
 ---
-- name: "Customizing Parrot VM"
+- name: Customizing Parrot VM
   hosts: virtualmachines
   connection: local
+  tasks:
+    - name: Updating apt repository
+      apt:
+        update_cache: yes
+      become: true
+      become_method: sudo
   roles:
-    - role: "roles/initialize"
     - role: "roles/customize-terminal"
     - role: "roles/install-tools"
     - role: "roles/configure-applications"
