@@ -8,7 +8,7 @@
   copy:
     src: "{{ role_path }}/files/getburpcert.sh"
     dest: /tmp/getburpcert.sh
-    mode: 744
+    mode: '0744'
   when: cert.stat.exists == false
 
 - name: Executing script to download Burp CA cert
