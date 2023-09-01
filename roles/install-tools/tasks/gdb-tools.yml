@@ -1,0 +1,11 @@
+---
+- name: Cloning repo for setup
+  git:
+    repo: "https://github.com/DGclasher/gdb-assistant"
+    dest: "/tmp/gdb-assistant"
+
+- name: Running script to install
+  command:
+    chdir: "/tmp/gdb-assistant"
+    cmd: "sh install.sh < <(echo y)"
+    

@@ -14,6 +14,29 @@
   become: true
   become_method: sudo
 
+- name: Installing GDB
+  apt:
+    name: gdb
+    state: present
+  become: true
+  become_method: sudo
+  register: gdb_output
+  ignore_errors: true
+  no_log: true
+
+- name: GDB installation failed due to dependency issue, Downloading script for manual install
+  ansible.builtin.get_url:
+    url: "https://github.com/DGclasher/normie-scripts/raw/main/gdb-installer/gdb-installer.sh"
+    dest: /tmp/
+    mode: '0744'
+    timeout: 30
+  when: gdb_output.failed == true
+
+- name: Message
+  debug:
+    msg: "Go to /tmp and execute the gdb-installer.sh script"
+  when: gdb_output.failed == true
+
 - name: Downloading some other stuffs
   ansible.builtin.get_url:
     url: "{{ item.url }}"
