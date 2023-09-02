@@ -3,6 +3,7 @@
 ## Description
 
 Parrot playbook is an Ansible automation which sets up your parrot vm for some cool stuffs.
+Grab htb edition of parrot os from [here](https://www.parrotsec.org/download/).
 
 ## How to run
 
