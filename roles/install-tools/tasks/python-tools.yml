@@ -3,6 +3,7 @@
   ansible.builtin.pip:
     name:
       - pipx
+      - pwntools
 
 - name: Ensuring pipx path
   shell: pipx ensurepath

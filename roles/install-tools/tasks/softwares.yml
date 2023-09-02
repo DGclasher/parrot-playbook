@@ -24,17 +24,10 @@
   ignore_errors: true
   no_log: true
 
-- name: GDB installation failed due to dependency issue, Downloading script for manual install
-  ansible.builtin.get_url:
-    url: "https://github.com/DGclasher/normie-scripts/raw/main/gdb-installer/gdb-installer.sh"
-    dest: /tmp/
-    mode: '0744'
-    timeout: 30
-  when: gdb_output.failed == true
-
-- name: Message
-  debug:
-    msg: "Go to /tmp and execute the gdb-installer.sh script"
+- name: Error installing GDB, error output written to file /tmp/gdb_error.txt
+  copy:
+    content: "{{ gdb_output }}"
+    dest: /tmp/gdb_error.txt
   when: gdb_output.failed == true
 
 - name: Downloading some other stuffs
