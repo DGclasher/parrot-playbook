@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "target: $1" > "/opt/target.txt"
+

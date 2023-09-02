@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -eq 0 ];
+then
+  echo "Usage $0 [box name]"
+  exit
+fi
+
+echo "Creating Setup for $1"
+
+mkdir -p "$1/enum/nmap"
+mkdir -p "$1/enum/dirs"
+mkdir "$1/www"
+
+echo "Setup Ready..."

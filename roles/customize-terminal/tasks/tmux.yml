@@ -10,3 +10,13 @@
    copy:
      src: "{{ role_path }}/files/.tmux.conf"
      dest: "{{ ansible_env.HOME }}"
+
+ - name: Copying setup scripts to path
+   copy:
+     src: "{{ role_path }}/files/{{ item }}"
+     dest: "{{ ansible_env.HOME }}/.local/bin/"
+     mode: '0740'
+   loop:
+     - "make-setup"
+     - "set-target"
+
