@@ -15,7 +15,6 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
 
-
 - name: Cloning the kerbrute repo
   git:
     repo: "https://github.com/ropnop/kerbrute"
@@ -29,24 +28,6 @@
 - name: Moving kerbrute to bin
   copy:
     src: "/tmp/kerbrute/kerbrute"
-    dest: "{{ ansible_env.HOME }}/.local/bin/"
-    mode: '0750'
-
-
-- name: Cloning ffuf repo
-  git:
-    repo: "https://github.com/ffuf/ffuf"
-    dest: "/tmp/ffuf"
-
-- name: Building ffuf
-  shell: |
-    cd /tmp/ffuf
-    go get
-    go build
-
-- name: Moving ffuf to bin
-  copy:
-    src: "/tmp/ffuf/ffuf"
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
 

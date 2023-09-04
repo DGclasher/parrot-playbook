@@ -3,6 +3,7 @@
   package:
     name:
       - jq
+      - ffuf
       - ghidra
       - ntpdate
       - exiftool
