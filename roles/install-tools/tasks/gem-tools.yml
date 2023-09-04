@@ -1,0 +1,12 @@
+---
+- name: Installing tools via gem
+  community.general.gem:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - winrm
+    - winrm-fs
+    - evil-winrm
+  become: true
+  become_method: sudo
+  

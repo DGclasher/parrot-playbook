@@ -1,6 +1,7 @@
 ---
 - include: softwares.yml
 - include: python-tools.yml
+- include: gem-tools.yml
 - include: bloodHound.yml
 - include: build-install.yml
 - include: enum-tools.yml
