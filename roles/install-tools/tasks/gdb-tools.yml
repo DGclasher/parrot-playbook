@@ -1,11 +1,28 @@
 ---
+- name: Installing GDB
+  apt:
+    name: gdb
+    state: present
+  become: true
+  become_method: sudo
+  register: gdb_output
+  ignore_errors: true
+  no_log: true
+
+- name: Error installing GDB, error output written to file /tmp/gdb_error.txt
+  copy:
+    content: "{{ gdb_output }}"
+    dest: /tmp/gdb_error.txt
+  when: gdb_output.failed == true
+
 - name: Cloning repo for setup
   git:
     repo: "https://github.com/DGclasher/gdb-assistant"
     dest: "/tmp/gdb-assistant"
+  when: gdb_output.failed == false
 
 - name: Running script to install
   command:
     chdir: "/tmp/gdb-assistant"
     cmd: "sh install.sh < <(echo y)"
-    
+  when: gdb_output.failed == false
