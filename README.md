@@ -36,4 +36,3 @@ sudo whoami
 ```
 ansible-playbook main.yml
 ```
----
