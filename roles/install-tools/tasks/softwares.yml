@@ -1,20 +1,21 @@
 ---
-- name: Installing softwares from repo
-  package:
-    name:
-      - jq
-      - ffuf
-      - ghidra
-      - ntpdate
-      - exiftool
-      - dirsearch
-      - docker.io
-      - flameshot
-      - burpsuite
-      - apt-transport-https
+- name: Installing tools from repo
+  apt:
+    name: "{{ item }}"
     state: present
   become: true
   become_method: sudo
+  loop:
+    - jq
+    - ffuf
+    - ghidra
+    - ntpdate
+    - exiftool
+    - dirsearch
+    - docker.io
+    - flameshot
+    - burpsuite
+    - apt-transport-https
 
 - name: Downloading some other stuffs
   ansible.builtin.get_url:
