@@ -6,9 +6,12 @@
   loop:
     - { name: "tools" }
     - { name: "tools/enum" }
+    - { name: "tools/exploit" }
+    - { name: "tools/forwarding" }
     - { name: "tools/enum/linux" }
     - { name: "tools/enum/windows" }
-    - { name: "tools/forwarding" }
+    - { name: "tools/exploit/linux" }
+    - { name: "tools/exploit/windows" }
   become: true
   become_method: sudo
 
@@ -19,9 +22,16 @@
     mode: '664'
     timeout: 30
   loop:
+    - { url: "https://github.com/61106960/adPEAS/raw/main/adPEAS.ps1", dest: "enum/windows/" }
     - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "enum/linux/" }
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
+    - { url: "https://github.com/PowerShellMafia/PowerSploit/raw/dev/Recon/PowerView.ps1", dest: "enum/windows/" }
+    - { url: "https://github.com/PowerShellMafia/PowerSploit/raw/dev/Privesc/PowerUp.ps1", dest: "enum/windows/" }
     - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe", dest: "enum/windows/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/SharpUp.exe", dest: "enum/windows/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Seatbelt.exe", dest: "enum/windows/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe", dest: "exploit/windows/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Certify.exe", dest: "exploit/windows/" }
   become: true
   become_method: sudo
   async: 90
@@ -68,6 +78,5 @@
   loop:
     - { url: "https://github.com/samratashok/nishang", name: "nishang", branch: "master" }
     - { url: "https://github.com/danielmiessler/SecLists", name: "SecLists", branch: "master" }
-    - { url: "https://github.com/PowerShellMafia/PowerSploit", name: "PowerSploit", branch: "dev" }
   become: true
   become_method: sudo
