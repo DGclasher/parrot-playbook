@@ -5,13 +5,13 @@
     state: directory
   loop:
     - { name: "tools" }
-    - { name: "tools/enum" }
-    - { name: "tools/exploit" }
+    - { name: "tools/linux" }
+    - { name: "tools/windows" }
     - { name: "tools/forwarding" }
-    - { name: "tools/enum/linux" }
-    - { name: "tools/enum/windows" }
-    - { name: "tools/exploit/linux" }
-    - { name: "tools/exploit/windows" }
+    - { name: "tools/linux/enum" }
+    - { name: "tools/windows/enum" }
+    - { name: "tools/linux/exploit" }
+    - { name: "tools/windows/exploit" }
   become: true
   become_method: sudo
 
@@ -22,19 +22,19 @@
     mode: '664'
     timeout: 30
   loop:
-    - { url: "https://github.com/61106960/adPEAS/raw/main/adPEAS.ps1", dest: "enum/windows/" }
-    - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "enum/linux/" }
-    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "enum/linux/" }
-    - { url: "https://github.com/PowerShellMafia/PowerSploit/raw/dev/Recon/PowerView.ps1", dest: "enum/windows/" }
-    - { url: "https://github.com/PowerShellMafia/PowerSploit/raw/dev/Privesc/PowerUp.ps1", dest: "enum/windows/" }
-    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe", dest: "enum/windows/" }
-    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/SharpUp.exe", dest: "enum/windows/" }
-    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Seatbelt.exe", dest: "enum/windows/" }
-    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe", dest: "exploit/windows/" }
-    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Certify.exe", dest: "exploit/windows/" }
+    - { url: "https://github.com/61106960/adPEAS/raw/main/adPEAS.ps1", dest: "windows/enum/" }
+    - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "linux/enum/" }
+    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", dest: "linux/enum/" }
+    - { url: "https://github.com/PowerShellMafia/PowerSploit/raw/dev/Recon/PowerView.ps1", dest: "windows/enum/" }
+    - { url: "https://github.com/PowerShellMafia/PowerSploit/raw/dev/Privesc/PowerUp.ps1", dest: "windows/enum/" }
+    - { url: "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe", dest: "windows/enum/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/SharpUp.exe", dest: "windows/enum/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Seatbelt.exe", dest: "windows/enum/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe", dest: "windows/exploit/" }
+    - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Certify.exe", dest: "windows/exploit/" }
   become: true
   become_method: sudo
-  async: 90
+  async: 150
   poll: 0
 
 - name: Requesting latest chisel releases
