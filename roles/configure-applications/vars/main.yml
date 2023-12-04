@@ -1,8 +1,8 @@
 ---
 firefoxPlugins:
   - "darkreader"
-  - "foxyproxy-standard"
   - "ublock-origin"
+  - "foxyproxy-standard"
 
 burpsuite_extras_dir: "/usr/local/lib/BurpSuite"
 

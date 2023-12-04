@@ -11,10 +11,10 @@
     - ghidra
     - ntpdate
     - exiftool
-    - dirsearch
     - docker.io
     - flameshot
     - burpsuite
+    - feroxbuster
     - apt-transport-https
 
 - name: Downloading some other stuffs
