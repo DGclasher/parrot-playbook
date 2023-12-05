@@ -1,22 +1,14 @@
 ---
-- name: Installing tools via gem
-  gem:
-    name: "{{ item }}"
-    state: latest
-  loop:
-    - logger
-    - stringio
-    - winrm
-    - builder
-    - erubi
-    - gssapi
-    - gyoku
-    - httpclient
-    - logging
-    - little-plugger
-    - nori
-    - rubyntlm
-    - winrm-fs
-    - evil-winrm
+- name: Copy evil-winrm install script to /tmp
+  copy:
+    src: "{{ role_path }}/files/evil-winrm-install.sh"
+    dest: /tmp/evil-winrm-install.sh
+    mode: '0755'
+
+- name: Installing evil-winrm
+  shell: /tmp/evil-winrm-install.sh
   become: true
   become_method: sudo
+  ignore_errors: true
+  async: 300
+  poll: 0

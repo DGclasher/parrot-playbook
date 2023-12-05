@@ -11,11 +11,10 @@
 - name: Installing tools via pipx
   community.general.pipx:
     name: "{{ item.name }}"
-    source: "{{ item.url }}"
     state: latest
   loop:
-    - { name: "arjun", url: "git+https://github.com/s0md3v/Arjun.git" }
-    - { name: "certipy-ad", url: "git+https://github.com/ly4k/Certipy.git" }
-    - { name: "git-dumper", url: "git+https://github.com/arthaud/git-dumper.git" }
-    - { name: "crackmapexec", url: "git+https://github.com/mpgn/CrackMapExec.git" }
-    - { name: "bloodhound", url: "git+https://github.com/dirkjanm/BloodHound.py.git" }
+    - { name: "arjun" }
+    - { name: "certipy-ad" }
+    - { name: "git-dumper" }
+    - { name: "bloodhound" }
+    - { name: "crackmapexec" }

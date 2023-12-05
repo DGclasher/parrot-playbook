@@ -20,7 +20,7 @@
     url: "{{ item.url }}"
     dest: "/opt/tools/{{ item.dest }}"
     mode: '664'
-    timeout: 30
+    timeout: 40
   loop:
     - { url: "https://github.com/61106960/adPEAS/raw/main/adPEAS.ps1", dest: "windows/enum/" }
     - { url: "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64", dest: "linux/enum/" }
@@ -34,7 +34,7 @@
     - { url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Certify.exe", dest: "windows/exploit/" }
   become: true
   become_method: sudo
-  async: 150
+  async: 200
   poll: 0
 
 - name: Requesting latest chisel releases

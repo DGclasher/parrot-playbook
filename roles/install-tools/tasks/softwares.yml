@@ -7,15 +7,14 @@
   become_method: sudo
   loop:
     - jq
-    - ffuf
     - ghidra
     - ntpdate
     - exiftool
     - docker.io
     - flameshot
     - burpsuite
-    - feroxbuster
     - apt-transport-https
+  ignore_errors: true
 
 - name: Downloading some other stuffs
   ansible.builtin.get_url:
