@@ -1,0 +1,23 @@
+---
+- name: Copy myip.sh script to /opt
+  copy:
+    src: "{{ role_path }}/files/myip.sh"
+    dest: /opt
+    mode: '0755'
+  become: true
+  become_method: sudo
+
+- name: Create target.txt file in /opt
+  file:
+    path: /opt/target.txt
+    state: touch
+  become: true
+  become_method: sudo
+
+- name: Change target.txt ownership to user
+  file:
+    path: /opt/target.txt
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  become: true
+  become_method: sudo

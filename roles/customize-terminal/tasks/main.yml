@@ -1,3 +1,4 @@
 ---
 - include: tmux.yml
 - include: bash-and-profiles.yml
+- include: task-bar.yml
