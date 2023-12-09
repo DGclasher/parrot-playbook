@@ -48,7 +48,7 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'    
 
-- name: Downloading latest version of feroxbuster
+- name: Downloading feroxbuster
   ansible.builtin.get_url:
     url: "https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.tar.gz"
     dest: "/tmp/feroxbuster.tar.gz"

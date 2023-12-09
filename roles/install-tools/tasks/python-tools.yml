@@ -17,4 +17,9 @@
     - { name: "certipy-ad" }
     - { name: "git-dumper" }
     - { name: "bloodhound" }
-    - { name: "crackmapexec" }
+
+- name: Installing netexec
+  community.general.pipx:
+    name: netexec
+    state: latest
+    source: 'git+https://github.com/Pennyw0rth/NetExec.git'

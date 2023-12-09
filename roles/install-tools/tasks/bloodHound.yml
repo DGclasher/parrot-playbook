@@ -65,7 +65,7 @@
   become: true
   become_method: sudo
 
-- name: Creating SymLink of BloodHound
+- name: Creating symlink of BloodHound
   ansible.builtin.file:
     src: "/opt/bloodHound/BloodHound"
     dest: "{{ ansible_env.HOME }}/.local/bin/bloodHound"

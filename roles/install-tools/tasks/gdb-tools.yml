@@ -25,4 +25,6 @@
   command:
     chdir: "/tmp/gdb-assistant"
     cmd: "sh install.sh < <(echo y)"
+  async: 150
+  poll: 0
   when: gdb_output.failed == false
