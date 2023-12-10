@@ -1,8 +1,8 @@
 ---
 - include: softwares.yml
 - include: python-tools.yml
-- include: gem-tools.yml
+- include: evil-winrm.yml
 - include: bloodHound.yml
-- include: build-install.yml
+- include: gh-tools.yml
 - include: enum-tools.yml
 - include: gdb-tools.yml
