@@ -8,6 +8,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/assetnote/kiterunner/releases/latest/download/kiterunner_{{ kiterunner_release.json.tag_name | regex_search('(?<=v)[0-9]+\\.[0-9]+\\.[0-9]+') }}_linux_amd64.tar.gz"
     dest: "/tmp/kiterunner.tar.gz"
+    timeout: 30
 
 - name: Extracting kiterunner
   ansible.builtin.unarchive:
@@ -20,6 +21,7 @@
     url: "https://github.com/ropnop/kerbrute/releases/latest/download/kerbrute_linux_amd64"
     dest: "{{ ansible_env.HOME }}/.local/bin/kerbrute"
     mode: '0750'
+    timeout: 30
 
 - name: Getting latest release of ffuf
   uri:
