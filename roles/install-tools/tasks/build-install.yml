@@ -1,34 +1,24 @@
 ---
-- name: Cloning kiterunner repo
-  git:
-    repo: "https://github.com/assetnote/kiterunner"
-    dest: "/tmp/kiterunner"
+- name: Getting latest release of kiterunner
+  uri:
+    url: "https://api.github.com/repos/assetnote/kiterunner/releases/latest"
+  register: kiterunner_release
 
-- name: "building kiteunner"
-  shell: |
-    cd /tmp/kiterunner
-    make build
+- name: Downloading kiterunner
+  ansible.builtin.get_url:
+    url: "https://github.com/assetnote/kiterunner/releases/latest/download/kiterunner_{{ kiterunner_release.json.tag_name | regex_search('(?<=v)[0-9]+\\.[0-9]+\\.[0-9]+') }}_linux_amd64.tar.gz"
+    dest: "/tmp/kiterunner.tar.gz"
 
-- name: Moving kr to bin
-  copy:
-    src: "/tmp/kiterunner/dist/kr"
+- name: Extracting kiterunner
+  ansible.builtin.unarchive:
+    src: "/tmp/kiterunner.tar.gz"
     dest: "{{ ansible_env.HOME }}/.local/bin/"
     mode: '0750'
 
-- name: Cloning the kerbrute repo
-  git:
-    repo: "https://github.com/ropnop/kerbrute"
-    dest: "/tmp/kerbrute"
-
-- name: Building kerbrute
-  shell: |
-    cd /tmp/kerbrute
-    go build
-
-- name: Moving kerbrute to bin
-  copy:
-    src: "/tmp/kerbrute/kerbrute"
-    dest: "{{ ansible_env.HOME }}/.local/bin/"
+- name: Downloading kerbrute
+  ansible.builtin.get_url:
+    url: "https://github.com/ropnop/kerbrute/releases/latest/download/kerbrute_linux_amd64"
+    dest: "{{ ansible_env.HOME }}/.local/bin/kerbrute"
     mode: '0750'
 
 - name: Getting latest release of ffuf

@@ -14,6 +14,7 @@
     state: latest
   loop:
     - { name: "arjun" }
+    - { name: "impacket" }
     - { name: "certipy-ad" }
     - { name: "git-dumper" }
     - { name: "bloodhound" }

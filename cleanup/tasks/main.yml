@@ -1,0 +1,9 @@
+---
+- name: Cleanup using apt
+  apt:
+    name:
+      - codium
+      - impacket-scripts
+  state: absent
+  become: true
+  become_method: sudo
