@@ -2,8 +2,8 @@
 - name: Cleanup using apt
   apt:
     name:
-      - codium
-      - impacket-scripts
-  state: absent
+      - "codium"
+      - "impacket-scripts"
+    autoremove: yes
   become: true
   become_method: sudo
