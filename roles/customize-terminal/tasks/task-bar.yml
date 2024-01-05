@@ -17,7 +17,7 @@
 - name: Change target.txt ownership to user
   file:
     path: /opt/target.txt
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
   become: true
   become_method: sudo

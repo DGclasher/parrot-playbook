@@ -13,7 +13,7 @@
 - name: Extracting kiterunner
   ansible.builtin.unarchive:
     src: "/tmp/kiterunner.tar.gz"
-    dest: "{{ ansible_env.HOME }}/.local/bin/"
+    dest: "/tmp/"
     mode: '0750'
 
 - name: Downloading kerbrute
@@ -22,11 +22,11 @@
     dest: "/tmp"
     timeout: 30
 
-- name: Moving kerbrute to bin
-  ansible.builtin.file:
-    src: "/tmp/kerbrute_linux_amd64"
-    dest: "{{ ansible_env.HOME }}/.local/bin/kerbrute"
-    mode: '0750'
+- name: Moving kerbrute and kr to bin
+  shell: |
+    mv /tmp/kerbrute_linux_amd64 ~/.local/bin/kerbrute
+    chmod +x ~/.local/bin/kerbrute
+    mv /tmp/kr ~/.local/bin/kr
 
 - name: Getting latest release of ffuf
   uri:

@@ -1,9 +1,12 @@
 ---
 - name: Cleanup using apt
   apt:
-    name:
-      - "codium"
-      - "impacket-scripts"
+    name: "{{ item }}"
     autoremove: yes
+    state: absent
   become: true
   become_method: sudo
+  ignore_errors: true
+  loop:
+    - "codium"
+    - "impacket-scripts"
