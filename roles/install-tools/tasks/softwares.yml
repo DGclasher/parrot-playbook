@@ -9,6 +9,7 @@
     - jq
     - ghidra
     - ntpdate
+    - mingw-w64
     - exiftool
     - docker.io
     - flameshot

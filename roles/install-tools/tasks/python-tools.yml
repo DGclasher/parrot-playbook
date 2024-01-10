@@ -15,6 +15,7 @@
   loop:
     - { name: "arjun" }
     - { name: "impacket" }
+    - { name: "dirsearch" }
     - { name: "certipy-ad" }
     - { name: "git-dumper" }
     - { name: "bloodhound" }
