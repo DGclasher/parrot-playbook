@@ -1,6 +1,6 @@
 ---
 - name: Customizing Parrot VM
-  hosts: virtualmachines
+  hosts: localhost
   connection: local
   pre_tasks:
     - name: Updating apt repository
